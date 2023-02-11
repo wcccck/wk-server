@@ -13,12 +13,12 @@ router.post('/login',(req,res,next)=>{
     db.query(query,[username],(err,result)=>{
       if(!err){ // 进入查询
         const userInfo = result[0]
-        if(userInfo.Id){ // 查询到了结果
+        if(result.length > 0){ // 查询到了结果
           if(password === userInfo.password){//密码正确
             let myToken = createToken({username:username,Id:userInfo.Id})
-           console.log(myToken)
+           // console.log(myToken)
             //   创建token 并且返回
-            res.$success({token:myToken})
+            res.$success({token:myToken,username,id:userInfo.Id})
           }else{
             res.$error('密码错误',403)
           }
