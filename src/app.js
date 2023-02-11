@@ -3,33 +3,50 @@ const app = new Express()
 const router = require('./router/index')
 const upload = require('./router/upload')
 const user = require('./router/user')
+const login = require('./router/login')
 const port = 7777
 const resultHandle = require('./middleware/resultMiddleWare')
 const bodyParser = require('body-parser')
+// const jwt = require("jsonwebtoken");
+const {expressjwt} = require('express-jwt')
+const {createToken,secret}= require("./token")
 
-// const db = require('./db/index')
-// const query = "INSERT INTO User(username,ImageUrl) VALUES('caonima','hhaha')"
-// const query2 = "update User set username=1 where id = 1"
-
-// db.query(query,(err,result)=>{
-//   if(err){
-//     console.log(err.message)
-//   }else {
-//     console.log(result)
-//   }
-//
-// })
 
 
 app.use('/uploads/',Express.static('./public/'))
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(resultHandle)
 
+app.use(expressjwt({
+  secret,
+  credentialsRequired:true,
+  algorithms:['HS256'],
+  getToken:function (req){
+    let token = req.headers.token
+    return token
+  }
+}).unless({
+  path:[
+      '/login',
+      '/'
+  ]
+}))
+
+app.use((err,req,res,next)=>{
+  console.log(err.name) // UnauthorizedError token验证不通过
+  if(err.name === 'UnauthorizedError'){
+    res.$error({msg:"token失效"},401)
+  }else{
+    next()
+  }
+})
+
 app.use(router)
 app.use(upload)
 app.use(user)
+app.use(login)
+
 app.listen(port,()=>{
   console.log('server is running http://localhost:7777')
 })
