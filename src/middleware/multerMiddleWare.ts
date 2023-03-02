@@ -1,7 +1,7 @@
 const multer = require('multer')
 const md5 = require('md5');
 const path = require('path')
-
+// 文件处理中间件
 const resolve = (p)=>{
   return path.resolve(__dirname,'./',p)
 }

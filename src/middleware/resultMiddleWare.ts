@@ -1,5 +1,11 @@
+import {Response,Request} from "express";
+type dataType = {
+  code?,
+  msg?,
+  data?
+}
 module.exports = function (req,res,next) {
-  const _data = {}
+  const _data:dataType = {}
   res.$success =  (data, code = 200)=> {
     res.status(code)
     _data.code = code
