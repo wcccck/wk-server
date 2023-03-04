@@ -6,7 +6,7 @@ import {ChatContext} from "../context/ChatContext";
 // get all friend
 router.get('/friend/:id',async (req,res)=>{
   const id = req.params.id
-  console.log(id)
+  console.log('router')
   const context = AccountContext.getInstance()
   try {
     const result = await context.getFriend(id)

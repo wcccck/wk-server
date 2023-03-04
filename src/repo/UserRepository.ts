@@ -57,11 +57,19 @@ export class UserRepository{ // 用户仓库
   }
 
   public async getFriend(id:number):Promise<object>{
+    const test = []
     const result = await FriendModel.findAll({
       where:{
         user_id:id
       }
     })
+    let i = 0
+    while (i<result.length){
+      test.push(await this.getUser(result[i].dataValues.friend_id))
+      i++
+    }
+
+    console.log(test)
     return result
   }
 

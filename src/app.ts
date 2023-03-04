@@ -1,25 +1,10 @@
 const Express = require('express')
 const app = new Express()
-// const server = require('http').Server(app)
-// const io = require('socket.io')(server,{
-//   cors:{
-//     origin:"http://127.0.0.1:5173",
-//     methods: ["GET","POST"],
-//     credentials: true,
-//     allowEIO3: true
-//   },
-//   transport: ['websocket']
-// })
-
-
-import './MongoDB/index'
 const upload = require('./router/upload')
 const user = require('./router/user')
 const login = require('./router/login')
 import Friend from './router/Firend'
 import Message from "./router/Message";
-import {DB} from "./db/DB";
-import userModel from "./db/model/UserModel/userModel";
 import './db/model/UserModel/syncModel'
 const port = 7777
 const resultHandle = require('./middleware/resultMiddleWare')
@@ -38,7 +23,6 @@ import {ChatContext} from "./context/ChatContext";
 app.get('/stream/:id',async (req,res)=>{
   const id = req.params.id
   const context = ChatContext.getInstance()
-
   // res.header({
   //   "Context-Type":"text/event-stream",
   //   "Cache-Control":"no-cache",
@@ -59,11 +43,7 @@ app.get('/stream/:id',async (req,res)=>{
     if(len !== Message.length){
       res.write("data: " + (result) + "\n\n");
       len = Message.length
-
     }
-    // res.write("data: " + (new Date()) + "\n\n");
-
-
   }, 300);
 
   req.connection.addListener('close',function (){
@@ -94,8 +74,6 @@ app.use(expressjwt({
 app.use((err,req,res,next)=>{
   console.log(err.name) // UnauthorizedError token验证不通过
   if(err.name === 'UnauthorizedError'){
-    // next()
-    // return
     res.$error({msg:"token失效"},401)
   }else{
     next()
@@ -104,8 +82,8 @@ app.use((err,req,res,next)=>{
 
 
 
-app.use(upload)
-app.use(user)
+// app.use(upload)
+// app.use(user)
 app.use(login)
 app.use(Message)
 app.use(Friend)

@@ -29,8 +29,9 @@ let storage = multer.diskStorage({
   }
 })
 
-const multerConfig = multer({storage,limits:{
-    fileSize: 1024 * 1024,
-  },})
+// const multerConfig = multer({storage,limits:{
+//     fileSize: 1024 * 1024,
+//   },})
 
-module.exports = multerConfig
+// module.exports = multerConfig
+module.exports = {}

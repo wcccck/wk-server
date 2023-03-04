@@ -36,6 +36,7 @@ export class AccountContext{ // 一个场景 scene
   }
 
   public async getFriend(id:number){
+    console.log('ctx')
     const result = await this.repo.getFriend(id)
     return result
     // 通过自己ID查询数据 获得所有friend 需要发送一次请求来操作 也可以在User初始化的时候就数据库获取

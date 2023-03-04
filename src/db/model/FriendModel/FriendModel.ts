@@ -7,6 +7,12 @@ const FriendModel = db.define('Friend',{
   },
   friend_id:{
     type:DataTypes.INTEGER
+  },
+  friend_name:{
+    type:DataTypes.STRING
+  },
+  friend_image:{
+    type:DataTypes.STRING
   }
 },{
   tableName:"Friend",
