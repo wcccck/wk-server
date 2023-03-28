@@ -2,7 +2,7 @@ const Express = require("express");
 const router = Express.Router()
 const multerConfig = require('../middleware/multerMiddleWare')
 
-function uploadFile(req,res){
+export function uploadFile(req,res){
   return new Promise((resolve,reject)=>{
     multerConfig.single('file')(req,res,function (err){
       if(err){

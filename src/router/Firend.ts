@@ -23,4 +23,5 @@ router.post('/friend/:id',(req,res)=>{
   const fImage = req.body.fImage
 
 })
+
 export default router

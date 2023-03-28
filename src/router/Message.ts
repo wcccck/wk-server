@@ -25,9 +25,10 @@ Router.post('/message',async (req,res:ResType)=>
   const id = req.body.from // selfID
   const context = ChatContext.getInstance()
   const MessageId = await context.sendMessage(id,Message)
+
   // console.log(MessageId)
   if(MessageId){
-    res.$success('信息传输成功',200)
+    res.$success(MessageId,200)
   }else{
     res.$error('错误')
   }
@@ -37,6 +38,20 @@ Router.post('/message',async (req,res:ResType)=>
 // 删除自己的信息 通过id
 Router.delete('/message',(req,res)=>{
 
+})
+
+Router.put('/message/:id',async (req,res:ResType)=>{
+  const id = req.params.id
+  const ctx=  ChatContext.getInstance()
+
+  try {
+    const result = await ctx.readMessage(Number(id))
+    res.$success(result)
+  }catch (e) {
+    res.$error(e)
+  }
+
+  // readMessage
 })
 
 

@@ -5,23 +5,14 @@ import MessageModel from "../db/model/MessageModel/messageModel";
 import '../db/model/MessageModel/sync'
 import {Op} from "sequelize";
 export class UserChat{
-  private user:User // 谁的UserChat
-  public Msgs:Array<Message> = []// 信息Message
-  private session:Record<number, ChatSession>= {} // 存放我和别人[]的会话
+  private user:User
+  public Msgs:Array<Message> = []
+  private session:Record<number, ChatSession>= {} // 存放会话
   constructor(user:User) {
     this.user = user
 
   }
-  public async init(){
-    await MessageModel.findAll({
-      where:{
-        [Op.or]:[
-          {from:this.user.getId()},
-          {to:this.user.getId()}
-        ]
-      }
-    })
-  }
+
   public createSession(to:User){
     console.log(to)
     if(this.session[to.getId()]){

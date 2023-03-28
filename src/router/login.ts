@@ -14,7 +14,7 @@ router.post('/login',async (req,res,next)=>{
   // password = md5(password + 'wkq')
   try {
     const result = await Context.login(username,password)
-    let myToken = createToken({username:username,Id:result.id})
+    let myToken = createToken({...result})
     res.$success({...result,myToken})
   }catch (e){
     res.$error("用户名或密码错误")

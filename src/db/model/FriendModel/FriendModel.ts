@@ -13,6 +13,12 @@ const FriendModel = db.define('Friend',{
   },
   friend_image:{
     type:DataTypes.STRING
+  },
+  alias:{
+    type:DataTypes.STRING
+  },
+  friend_chatId:{
+    type:DataTypes.STRING
   }
 },{
   tableName:"Friend",
