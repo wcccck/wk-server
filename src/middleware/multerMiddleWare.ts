@@ -1,7 +1,7 @@
 const multer = require('multer')
 const md5 = require('md5');
 const path = require('path')
-
+// 文件处理中间件
 const resolve = (p)=>{
   return path.resolve(__dirname,'./',p)
 }
@@ -29,8 +29,9 @@ let storage = multer.diskStorage({
   }
 })
 
-const multerConfig = multer({storage,limits:{
-    fileSize: 1024 * 1024,
-  },})
+// const multerConfig = multer({storage,limits:{
+//     fileSize: 1024 * 1024,
+//   },})
 
-module.exports = multerConfig
+// module.exports = multerConfig
+module.exports = {}

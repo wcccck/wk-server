@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "esModuleInterop": true,
+    "lib": ["DOM","ESNext"],
+    "moduleResolution": "node",
+
+  },
+  "include": ["src/**/*.ts"]
+}

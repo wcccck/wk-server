@@ -6,7 +6,7 @@ const secret = "first_token" // 自定义秘钥
 
 const createToken = function (Data){ // 通过Data生成token
   let token = jwt.sign(Data,secret,{
-    expiresIn:60*60 // s为单位
+    expiresIn:60*60*24  // s为单位
   })
   return token
 }
