@@ -33,7 +33,6 @@ app.get('/stream/:id',async (req,res)=>{
     "Cache-Control": "no-cache",
     "Connection": "keep-alive"
   });
-  console.log(1)
   let i = 0
   const r = await context.getMessage(id)
   let len = r.length
