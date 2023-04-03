@@ -24,4 +24,7 @@ router.post('/friend/:id',(req,res)=>{
 
 })
 
+router.delete('/friend/:id',(req,res)=>{
+
+})
 export default router

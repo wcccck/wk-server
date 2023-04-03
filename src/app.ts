@@ -24,7 +24,6 @@ import {ChatContext} from "./context/ChatContext";
 app.get('/stream/:id',async (req,res)=>{
   const id = req.params.id
   const context = ChatContext.getInstance()
-
   res.writeHead(200, {
     "Content-Type": "text/event-stream",
     "Cache-Control": "no-cache",

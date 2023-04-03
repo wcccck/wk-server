@@ -28,18 +28,7 @@ export class AccountContext{ // scene
       Info.QRCode = User.QRCode
     }
     return  Info
-    // return User
-    // if(User){
-    //
-    //   // console.log(User)
-    //   // console.log(typeof User)
-    //   return User
-    // }else{
-    //   console.log("用户不存在")
-    // }
 
-    // this.repo
-    // repo先去数据库看看 有的话 createToken 或者 从本地token拿
   }
 
   /**
@@ -49,7 +38,6 @@ export class AccountContext{ // scene
   public async getFriend(id:number){
     const result = await this.repo.getFriend(id)
     return result
-
   }
 
 

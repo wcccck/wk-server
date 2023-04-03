@@ -22,7 +22,7 @@ export class MessageRepository{
   }
   public changeFlash(){
     // 关闭缓存
-    this.flash = !this.flash
+    this.flash = false
     console.log('nowFlsh',this.flash)
   }
   messages:Record<number, Array<Message>> = {}

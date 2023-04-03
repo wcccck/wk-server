@@ -1,4 +1,5 @@
 import {UserChat} from "./UserChat";
+import {Friend} from "./Friend";
 
 export class User{
   private id
@@ -8,17 +9,16 @@ export class User{
 
   public chatID:string
   public QRCode:string
-  private friend:Record<number, object> = {} // 我的friend
+  private Friends:Friend[]=[] // 我的friend
 
-  // public username
-  // private friend
-  constructor(id:number,username:string,headImage:string,chatID:string, QRCode?:string) {
+  constructor(id:number,username:string,headImage:string,chatID:string,friends?:Array<Friend>, QRCode?:string) {
     this.id = id
     this.headImage = headImage
     this.chatID = chatID
     this.QRCode = QRCode
     this.username = username
     this.chat = new UserChat(this)
+    friends && (this.Friends = friends)
   }
   getId(){
     return this.id
