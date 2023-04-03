@@ -3,7 +3,6 @@ import UserModel from "../db/model/UserModel/userModel";
 import FriendModel from "../db/model/FriendModel/FriendModel";
 import '../db/model/UserModel/syncModel'
 import '../db/model/FriendModel/sync'
-import {DB} from "../db/DB";
 // import
 export class UserRepository{ // 用户仓库
   private users:Record<number, User> = {}
@@ -31,7 +30,9 @@ export class UserRepository{ // 用户仓库
         if(dataUser.dataValues){
           const id = dataUser.dataValues.id
           const username = dataUser.dataValues.username
-          user = new User(id,username)
+          const headImage = dataUser.dataValues.headImage
+          const chatID = dataUser.dataValues.chatID
+          user = new User(id,username,headImage,chatID)
           this.users[id] = user
         }
         return user
@@ -48,7 +49,9 @@ export class UserRepository{ // 用户仓库
       if(result.dataValues){
         const id = result.dataValues.id
         const username = result.dataValues.username
-        user = new User(id,username)
+        const headImage = result.dataValues.headImage
+        const chatID = result.dataValues.chatID
+        user = new User(id,username,headImage,chatID)
         this.users[id] = user
       }
       return user

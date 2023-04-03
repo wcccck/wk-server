@@ -10,7 +10,6 @@ export class ChatSession{
     this.to = to
   }
   chat(fMessage:Message,tMessage:Message){
-    console.log(2)
     this.from.getChat().sendMessage(fMessage)
     this.from.getChat().receiveMessage(tMessage)
   }

@@ -23,4 +23,8 @@ router.post('/friend/:id',(req,res)=>{
   const fImage = req.body.fImage
 
 })
+
+router.delete('/friend/:id',(req,res)=>{
+
+})
 export default router

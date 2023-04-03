@@ -15,6 +15,15 @@ const User = db.define("User",{
   password:{
     type:DataTypes.STRING,
     allowNull:false
+  },
+  headImage:{
+    type:DataTypes.STRING
+  },
+  chatID:{
+    type:DataTypes.STRING
+  },
+  QRCode:{
+    type:DataTypes.STRING
   }
 },{
   tableName:"User",

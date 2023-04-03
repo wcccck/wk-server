@@ -6,6 +6,7 @@ const login = require('./router/login')
 import Friend from './router/Firend'
 import Message from "./router/Message";
 import './db/model/UserModel/syncModel'
+import Discover from './router/Discover'
 const port = 7777
 const resultHandle = require('./middleware/resultMiddleWare')
 const bodyParser = require('body-parser')
@@ -23,31 +24,56 @@ import {ChatContext} from "./context/ChatContext";
 app.get('/stream/:id',async (req,res)=>{
   const id = req.params.id
   const context = ChatContext.getInstance()
-  // res.header({
-  //   "Context-Type":"text/event-stream",
-  //   "Cache-Control":"no-cache",
-  //   "Connections":"keep-alive"
-  // })
   res.writeHead(200, {
     "Content-Type": "text/event-stream",
     "Cache-Control": "no-cache",
     "Connection": "keep-alive"
   });
-  let i = 0
+
   const r = await context.getMessage(id)
   let len = r.length
-  var interval = setInterval(async function () {
+
+  let interval = setInterval(async function () {
+    const flush = context.getFlash()
     const Message = await context.getMessage(id)
     const result = JSON.stringify(Message)
-    if(len !== Message.length){
+    if(len !== Message.length){ // 长度不对 重新读取
       res.write("data: " + (result) + "\n\n");
       len = Message.length
+    }else if(flush){ // 刷新仓库
+      const fl = await context.flushMsg(id)
+      const msg = await context.getMessage(id)
+      const result =JSON.stringify(msg)
+      res.write("data: " + (result) + "\n\n");
+      console.log('推送新的信息')
+      context.changeFlash() // 关闭刷新
+      console.log('推送关闭',context.getFlash())
     }
-  }, 300);
+  }, 0);
 
   req.connection.addListener('close',function (){
     clearInterval(interval)
   },false)
+})
+
+app.get('/chatSession/:id',(req,res)=>{
+  const id = req.params.id
+  const ctx = ChatContext.getInstance()
+  var inter = setInterval(async ()=>{
+     await ctx.readMessage(id) // 一直去读取
+  },0)
+  res.writeHead(200, {
+    "Content-Type": "text/event-stream",
+    "Cache-Control": "no-cache",
+    "Connection": "keep-alive"
+  });
+  res.write("data: " + (new Date()) + "\n\n");
+  req.connection.addListener('close',function (){
+     // 修改为关闭状态 避免重复
+    if(ctx.getFlash()==true) ctx.changeFlash()
+    clearInterval(inter)
+    console.log('SSEcloseFlash应该是false',ctx.getFlash())
+  })
 })
 // token + 白名单
 app.use(expressjwt({
@@ -80,22 +106,13 @@ app.use((err,req,res,next)=>{
 })
 
 
-
-// app.use(upload)
-// app.use(user)
 app.use(login)
 app.use(Message)
 app.use(Friend)
-
+app.use(Discover)
 
 app.listen(port,()=>{
   console.log('server is running http://localhost:7777')
 })
-// io.on('connection', function(socket){
-//   console.log("草泥马的")
-//   socket.emit('news', {hello :'world'});
-//   socket.on('my other event', function(data){
-//     console.log(data);
-//   });
-// });
+
 
